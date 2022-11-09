@@ -68,11 +68,11 @@ inputs:
       Path to another directory in the repository, where molecule command will be issued from.
       Useful in those cases where Ansible roles are not in git repository root.
     required: false
-    default: ${{ github.workspace }}
+    default: "."
 
 runs:
   using: docker
-  image: ${{ inputs.image }}
+  image: "${{ inputs.image }}"
   env:
     ANSIBLE_ASYNC_DIR: "/tmp/.ansible_async"
     ANSIBLE_FORCE_COLOR: "1"
