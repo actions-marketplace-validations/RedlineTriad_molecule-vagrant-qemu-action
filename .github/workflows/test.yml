@@ -30,6 +30,10 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+      - name: Install Molecule on Runner
+        run: |
+          python3 -m pip install molecule molecule-vagrant
+
       - name: Create molecule scenario
         run: |
           molecule init role --driver-name vagrant redlinetriad.validate \
