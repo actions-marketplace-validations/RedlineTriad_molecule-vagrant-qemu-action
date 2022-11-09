@@ -36,10 +36,11 @@ jobs:
 
       - name: Create molecule scenario
         run: |
-          molecule init role --driver-name vagrant redlinetriad.validate
-          cd validate
-          cp ../test_files/molecule.yml molecule/default/molecule.yml
-          sed -i 's/redlinetriad.//g' molecule/default/converge.yml
+          mkdir test
+          cd test
+          molecule init role --driver-name vagrant test.validate
+          cp ../../test_files/molecule.yml validate/molecule/default/molecule.yml
+          sed -i 's/test.//g' validate/molecule/default/converge.yml
 
       - name: Test Molecule default pipeline
         uses: ./ # Uses an action in the root directory
