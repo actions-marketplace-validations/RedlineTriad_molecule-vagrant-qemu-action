@@ -45,5 +45,5 @@ jobs:
       - name: Test Molecule default pipeline
         uses: ./ # Uses an action in the root directory
         with:
-          molecule_working_dir: validate
+          molecule_working_dir: test/validate
           image: "${{ env.IMAGE }}:test"
