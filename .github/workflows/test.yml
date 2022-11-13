@@ -30,19 +30,20 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Test Molecule default pipeline
-        env:
-          ANSIBLE_FORCE_COLOR: '1'
+      - name: Install Molecule on Runner
         run: |
-          docker run \
-          -v /var/run/libvirt/virtqemud-sock:/var/run/libvirt/virtqemud-sock \
-          -v $(pwd)/test_files/:/var/test_files \
-          ${{ env.IMAGE }}:test \
-          sh -c "\
-            molecule --version \
-            && molecule init role --driver-name vagrant redlinetriad.validate \
-            && cd validate \
-            && cp /var/test_files/molecule.yml molecule/default/molecule.yml \
-            && sed -i 's/redlinetriad.//g' molecule/default/converge.yml \
-            && molecule test \
-          "
+          python3 -m pip install molecule molecule-vagrant
+
+      - name: Create molecule scenario
+        run: |
+          mkdir test
+          cd test
+          molecule init role --driver-name vagrant test.validate
+          cp ../test_files/molecule.yml validate/molecule/default/molecule.yml
+          sed -i 's/test.//g' validate/molecule/default/converge.yml
+
+      - name: Test Molecule default pipeline
+        uses: ./ # Uses an action in the root directory
+        with:
+          molecule_working_dir: test/validate
+          image: "${{ env.IMAGE }}:test"
