@@ -71,8 +71,18 @@ inputs:
     default: "."
 
 runs:
-  using: docker
-  image: "${{ inputs.image }}"
-  env:
-    ANSIBLE_ASYNC_DIR: "/tmp/.ansible_async"
-    ANSIBLE_FORCE_COLOR: "1"
+  using: composite
+  steps:
+    - run: |
+        docker run
+        -v $(pwd)/:/${{ github.workspace }}
+        ${{ inputs.image }}
+        sh -c "
+          molecule --version
+          && cd ${{ github.workspace }}
+          && molecule test
+        "
+      shell: bash
+      env:
+        ANSIBLE_ASYNC_DIR: "/tmp/.ansible_async"
+        ANSIBLE_FORCE_COLOR: "1"
