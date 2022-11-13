@@ -73,12 +73,14 @@ inputs:
 runs:
   using: composite
   steps:
-    - run: docker run -v $(pwd)/:${{ github.workspace }} ${{ inputs.image }}
+    - run: >
+        docker run
+        -v $(pwd)/:${{ github.workspace }}
+        -e "ANSIBLE_ASYNC_DIR=/tmp/.ansible_async"
+        -e "ANSIBLE_FORCE_COLOR=1"
+        -e "INPUT_MOLECULE_OPTIONS=${{ inputs.molecule_options }}"
+        -e "INPUT_MOLECULE_COMMAND=${{ inputs.molecule_command }}"
+        -e "INPUT_MOLECULE_ARGS=${{ inputs.molecule_args }}"
+        -e "INPUT_MOLECULE_WORKING_DIR=${{ inputs.molecule_working_dir }}"
+        ${{ inputs.image }}
       shell: bash
-      env:
-        ANSIBLE_ASYNC_DIR: "/tmp/.ansible_async"
-        ANSIBLE_FORCE_COLOR: "1"
-        INPUT_MOLECULE_OPTIONS: ${{ inputs.molecule_options }}
-        INPUT_MOLECULE_COMMAND: ${{ inputs.molecule_command }}
-        INPUT_MOLECULE_ARGS: ${{ inputs.molecule_args }}
-        INPUT_MOLECULE_WORKING_DIR: ${{ inputs.molecule_working_dir }}
