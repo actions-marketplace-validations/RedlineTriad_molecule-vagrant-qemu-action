@@ -13,7 +13,7 @@ inputs:
       Container image to use for running molecule testing.
       This is generally not needed and mostly useful for tests.
     required: true
-    default: docker://ghcr.io/redlinetriad/molecule-vagrant-qemu-action:v1
+    default: ghcr.io/redlinetriad/molecule-vagrant-qemu-action:v1
 
   molecule_options:
     description: |
