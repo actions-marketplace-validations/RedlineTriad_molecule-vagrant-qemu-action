@@ -74,13 +74,13 @@ runs:
   using: composite
   steps:
     - run: |
-        docker run
-        -v $(pwd)/:/${{ github.workspace }}
-        ${{ inputs.image }}
-        sh -c "
-          molecule --version
-          && cd ${{ github.workspace }}
-          && molecule test
+        docker run \
+        -v $(pwd)/:/${{ github.workspace }} \
+        ${{ inputs.image }} \
+        sh -c "\
+          molecule --version \
+          && cd ${{ github.workspace }} \
+          && molecule test \
         "
       shell: bash
       env:
