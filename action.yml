@@ -86,3 +86,7 @@ runs:
       env:
         ANSIBLE_ASYNC_DIR: "/tmp/.ansible_async"
         ANSIBLE_FORCE_COLOR: "1"
+        INPUT_MOLECULE_OPTIONS: ${{ inputs.molecule_options }}
+        INPUT_MOLECULE_COMMAND: ${{ inputs.molecule_command }}
+        INPUT_MOLECULE_ARGS: ${{ inputs.molecule_args }}
+        INPUT_MOLECULE_WORKING_DIR: ${{ inputs.molecule_working_dir }}
