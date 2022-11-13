@@ -68,7 +68,7 @@ inputs:
       Path to another directory in the repository, where molecule command will be issued from.
       Useful in those cases where Ansible roles are not in git repository root.
     required: false
-    default: ${{ github.workspace }}
+    default: "."
 
 runs:
   using: composite
@@ -76,6 +76,7 @@ runs:
     - run: >
         docker run
         -v $(pwd)/:${{ github.workspace }}
+        --workdir=${{ github.workspace }}
         -e "ANSIBLE_ASYNC_DIR=/tmp/.ansible_async"
         -e "ANSIBLE_FORCE_COLOR=1"
         -e "INPUT_MOLECULE_OPTIONS=${{ inputs.molecule_options }}"
