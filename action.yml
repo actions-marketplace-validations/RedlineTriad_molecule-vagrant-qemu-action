@@ -75,7 +75,7 @@ runs:
   steps:
     - run: |
         docker run \
-        -v $(pwd)/:/${{ github.workspace }} \
+        -v $(pwd)/:${{ github.workspace }} \
         ${{ inputs.image }} \
         sh -c "\
           molecule --version \
